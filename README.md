@@ -1,5 +1,7 @@
 # qulifang-ppt-tex
 
+[![Validate Skill](https://github.com/MAX400296/qulifang-ppt-tex/actions/workflows/validate.yml/badge.svg)](https://github.com/MAX400296/qulifang-ppt-tex/actions/workflows/validate.yml)
+
 `qulifang-ppt-tex` 是一个面向 Codex 的公开 Skill，用于把 PowerPoint 课件转换为可审查、可验证、可导入的结构化课件包。
 
 它会同时使用两条证据链：
