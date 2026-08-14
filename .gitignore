@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.idea/
+.vscode/
+.tmp/
+dist/
+build/
+*.zip
+*-qulifang-ppt-tex/
