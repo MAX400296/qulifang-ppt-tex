@@ -1,0 +1,4 @@
+interface:
+  display_name: "趣立方 PPT 转课件包"
+  short_description: "双证据逐字识别 PPT，校验公式和完整配图后生成可导入 ZIP"
+  default_prompt: "使用 $qulifang-ppt-tex 通过 OOXML 文本框证据和逐页视觉复核忠实识别这个 PPT，保持公式连续并提取标签完整的白底配图，生成管理后台可直接上传的课件 ZIP。"
