@@ -13,9 +13,9 @@
 
 ## 当前版本
 
-`v1.0.1`
+`v1.0.2`
 
-首个公开稳定版锁定以下规则：一页题目默认只生成一道题，多问保留为同一道题的子问；完整保留同页多张语义配图；配图使用白底和高清门槛；识别、题目边界与配图均经过阻断式校验。
+当前稳定版会在读取 PPT 前统一检查 Python、Pillow、渲染器、Poppler 和 `qulifang-to-tex`。缺少必需组件时先显示安装方法并停止，安装后重新检查通过才会继续处理。
 
 ## 安装
 
@@ -44,6 +44,14 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 $qulifang-ppt-tex 请处理这个 PPTX
 ```
 
+Skill 会自动先运行依赖预检。也可以手动检查：
+
+```bash
+python3 ~/.codex/skills/qulifang-ppt-tex/scripts/preflight_check.py --renderer auto
+```
+
+退出码 `0` 表示可以开始处理；退出码 `2` 表示存在阻断依赖。预检会一次性列出缺失项和建议安装命令，但不会在未经用户同意时修改机器环境。
+
 ## 同步更新
 
 向 Codex 输入：
@@ -58,7 +66,7 @@ Skill 会下载 `main` 分支的公开版本，校验版本号与目录结构，
 python3 ~/.codex/skills/qulifang-ppt-tex/scripts/update_skill.py
 ```
 
-如需固定版本，首次安装时使用 `--ref v1.0.1`。公开版本采用语义化版本号和 GitHub Release 发布。
+如需固定版本，首次安装时使用 `--ref v1.0.2`。公开版本采用语义化版本号和 GitHub Release 发布。
 
 ## 运行要求
 
