@@ -61,6 +61,18 @@ Ask only when no readable PowerPoint file is available, the file is encrypted/co
 
 ## Workflow
 
+### 0. Run the mandatory dependency preflight
+
+Before opening the presentation, creating an output directory, or running any extraction script, run:
+
+    python3 "$QULIFANG_PPT_SKILL_DIR/scripts/preflight_check.py" --renderer auto
+
+Treat exit code `2` or `ok=false` as a hard stop. Show the user the complete missing-component report and the proposed installation commands. Dependency installation changes the machine, so obtain the user's approval before running those commands. After installation, run the same preflight again. Do not start any later workflow step until it exits with code `0` and reports `ok=true`.
+
+`auto` requires Python 3.10+, Pillow, `qulifang-to-tex`, `pdftoppm`, and at least one usable renderer. It prefers Microsoft PowerPoint on macOS and otherwise uses LibreOffice. Missing optional XeLaTeX preview support does not block the importable ZIP. If verified high-resolution slide images already exist, use `--renderer external --external-pages "/absolute/pages"`; this is the only mode that does not require `pdftoppm` or a local office renderer.
+
+Never hide a missing dependency, continue with a partial toolchain, or begin PPT recognition while installation is pending.
+
 ### 1. Resolve tools and output
 
 Resolve this skill directory as `QULIFANG_PPT_SKILL_DIR`.
