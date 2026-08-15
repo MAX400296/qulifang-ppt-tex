@@ -98,7 +98,12 @@ class PreflightCheckTest(unittest.TestCase):
         )
         self.assertIn("已阻止 PPT 处理", human)
         self.assertIn("brew install poppler", human)
-        self.assertIn("安装完成后重新运行", human)
+        self.assertEqual(report["installationPolicy"]["executor"], "codex")
+        self.assertFalse(report["installationPolicy"]["userRunsCommands"])
+        self.assertTrue(report["installationPolicy"]["rerunAfterInstallation"])
+        self.assertIn("待 Codex 自动执行的安装计划", human)
+        self.assertIn("用户无需复制或手动运行命令", human)
+        self.assertIn("Codex 安装完成后必须自动重新运行", human)
 
     def test_external_pages_do_not_require_pdf_renderer(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
