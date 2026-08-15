@@ -67,11 +67,15 @@ Before opening the presentation, creating an output directory, or running any ex
 
     python3 "$QULIFANG_PPT_SKILL_DIR/scripts/preflight_check.py" --renderer auto
 
-Treat exit code `2` or `ok=false` as a hard stop. Show the user the complete missing-component report and the proposed installation commands. Dependency installation changes the machine, so obtain the user's approval before running those commands. After installation, run the same preflight again. Do not start any later workflow step until it exits with code `0` and reports `ok=true`.
+Treat exit code `2` or `ok=false` as a hard stop. Show the user the complete missing-component report and one consolidated installation plan, then ask one explicit approval question. Dependency installation changes the machine, so never install before the user approves.
+
+After the user approves, Codex must execute the proposed installation commands itself with the terminal, package manager, or `skill-installer`; do not ask the user to copy or run those commands. Install the smallest sufficient open-source fallback when several renderers are possible. Then automatically run the same preflight again. If another installable dependency is still missing, continue the approved install-and-recheck loop until the report exits with code `0` and `ok=true`.
+
+Hand a step back to the user only when Codex cannot complete it, such as entering a system administrator password, signing in to an app store or Microsoft account, accepting a paid-software license, or resolving a non-recoverable package-manager failure. State the exact manual step, wait for it, and resume the preflight automatically afterward. Do not start any later workflow step while approval, installation, or rechecking is pending.
 
 `auto` requires Python 3.10+, Pillow, `qulifang-to-tex`, `pdftoppm`, and at least one usable renderer. It prefers Microsoft PowerPoint on macOS and otherwise uses LibreOffice. Missing optional XeLaTeX preview support does not block the importable ZIP. If verified high-resolution slide images already exist, use `--renderer external --external-pages "/absolute/pages"`; this is the only mode that does not require `pdftoppm` or a local office renderer.
 
-Never hide a missing dependency, continue with a partial toolchain, or begin PPT recognition while installation is pending.
+Never hide a missing dependency, merely print commands for the user to run, continue with a partial toolchain, or begin PPT recognition while installation is pending.
 
 ### 1. Resolve tools and output
 
