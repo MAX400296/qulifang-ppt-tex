@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""在处理 PPT 前统一检查依赖，并为缺失项生成安装建议。"""
+"""在处理 PPT 前统一检查依赖，并生成由 Codex 执行的安装计划。"""
 
 from __future__ import annotations
 
@@ -313,6 +313,12 @@ def check_environment(
         "protocol": "qulifang-ppt-tex-preflight",
         "version": 1,
         "ok": not blocking,
+        "installationPolicy": {
+            "requiresUserApproval": True,
+            "executor": "codex",
+            "userRunsCommands": False,
+            "rerunAfterInstallation": True,
+        },
         "platform": platform_name,
         "rendererMode": renderer,
         "selectedRenderer": selected_renderer,
@@ -344,13 +350,14 @@ def format_human_report(report: Dict[str, object], rerun_command: str) -> str:
 
     lines.append("结论：依赖未满足，已阻止 PPT 处理。")
     lines.append("")
-    lines.append("安装建议（执行前先征得用户同意）：")
+    lines.append("待 Codex 自动执行的安装计划（执行前需用户同意）：")
+    lines.append("用户无需复制或手动运行命令；同意后由 Codex 执行安装并自动复检。")
     for index, item in enumerate(report["installPlan"], 1):
         lines.append(f"{index}. {item['id']}：{item['note']}")
         commands = item.get("commands") or []
         for command in commands:
             lines.append(f"   {command}")
-    lines.extend(["", "安装完成后重新运行：", f"   {rerun_command}"])
+    lines.extend(["", "Codex 安装完成后必须自动重新运行：", f"   {rerun_command}"])
     return "\n".join(lines)
 
 
