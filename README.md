@@ -13,9 +13,9 @@
 
 ## 当前版本
 
-`v1.0.2`
+`v1.0.3`
 
-当前稳定版会在读取 PPT 前统一检查 Python、Pillow、渲染器、Poppler 和 `qulifang-to-tex`。缺少必需组件时先显示安装方法并停止，安装后重新检查通过才会继续处理。
+当前稳定版会在读取 PPT 前统一检查 Python、Pillow、渲染器、Poppler 和 `qulifang-to-tex`。缺少必需组件时，Codex 会先汇总缺失项并请求用户授权；用户同意后，Codex 自行执行安装并自动复检，通过后才继续处理 PPT，用户无需复制安装命令。
 
 ## 安装
 
@@ -50,7 +50,7 @@ Skill 会自动先运行依赖预检。也可以手动检查：
 python3 ~/.codex/skills/qulifang-ppt-tex/scripts/preflight_check.py --renderer auto
 ```
 
-退出码 `0` 表示可以开始处理；退出码 `2` 表示存在阻断依赖。预检会一次性列出缺失项和建议安装命令，但不会在未经用户同意时修改机器环境。
+退出码 `0` 表示可以开始处理；退出码 `2` 表示存在阻断依赖。预检会一次性列出缺失项和安装计划，但不会在未经用户同意时修改机器环境。用户同意后由 Codex 执行安装并自动重跑预检；只有系统密码、应用商店登录或付费软件授权等无法代办的步骤才需要用户介入。
 
 ## 同步更新
 
@@ -66,7 +66,7 @@ Skill 会下载 `main` 分支的公开版本，校验版本号与目录结构，
 python3 ~/.codex/skills/qulifang-ppt-tex/scripts/update_skill.py
 ```
 
-如需固定版本，首次安装时使用 `--ref v1.0.2`。公开版本采用语义化版本号和 GitHub Release 发布。
+如需固定版本，首次安装时使用 `--ref v1.0.3`。公开版本采用语义化版本号和 GitHub Release 发布。
 
 ## 运行要求
 
